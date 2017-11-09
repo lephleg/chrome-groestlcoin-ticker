@@ -1,9 +1,9 @@
 {
     "manifest_version": 2,
 
-    "name": "Simple Bitcoin Ticker",
-    "description": "This extension shows latest price ticker of popular BTC trading markets.",
-    "version": "0.0.2",
+    "name": "Chrome Groestlcoin Ticker",
+    "description": "This extension shows latest price ticker from the top GRS exchanges.",
+    "version": "0.0.1",
 
     "browser_action": {
         "default_icon": "images/icon.png"
@@ -17,16 +17,7 @@
     "options_page": "options.html",
 
     "permissions": [
-        "https://data.btcc.com/",
-        "https://www.bitstamp.net/",
-        "https://www.okcoin.cn/",
-        "http://api.chbtc.com/",
-        "https://btc-e.com/",
-        "http://market.huobi.com/",
-        "http://api.796.com/",
-        "http://www.btctrade.com/",
-        "https://www.btc100.com/",
-        "https://api.bitfinex.com/",
-        "https://yunbi.com/"
+        "https://bittrex.com/",
+        "https://cryptopia.co.nz/"
     ]
 }
