@@ -4,54 +4,18 @@
      * @type {Object}
      */
     var defaultVals = {
-        'refresh_time': 15000,
+        'refresh_time': 10000,
         'default_market': '796'
     };
 
     var markets = {
-        'btce': {
-            url: 'https://btc-e.com/api/2/btc_usd/ticker',
-            key: 'ticker.last'
+        'bittrex': {
+            url: 'https://bittrex.com/api/v1.1/public/getticker?market=BTC-GRS',
+            key: 'result.Last'
         },
-        'bitstamp': {
-            url: 'https://www.bitstamp.net/api/ticker/',
-            key: 'last'
-        },
-        'btcc': {
-            url: 'https://data.btcc.com/data/ticker',
-            key: 'ticker.last'
-        },
-        'huobi': {
-            url: 'http://market.huobi.com/staticmarket/ticker_btc_json.js',
-            key: 'ticker.last'
-        },
-        'okcoin': {
-            url: 'https://www.okcoin.cn/api/ticker.do',
-            key: 'ticker.last'
-        },
-        'chbtc': {
-            url: 'http://api.chbtc.com/data/ticker',
-            key: 'ticker.last'
-        },
-        '796': {
-            url: 'http://api.796.com/v3/futures/ticker.html?type=weekly',
-            key: 'ticker.last'
-        },
-        'btctrade': {
-            url: 'http://www.btctrade.com/api/ticker',
-            key: 'last'
-        },
-        'btc100': {
-            url: 'https://www.btc100.com/apidata/getdata.json',
-            key: '0.bit'
-        },
-        'bitfinex': {
-            url: 'https://api.bitfinex.com/v1/pubticker/btcusd',
-            key: 'last_price'
-        },
-        'yunbi': {
-            url: 'https://yunbi.com/api/v2/tickers/btccny.json',
-            key: 'ticker.last'
+        'cryptopia': {
+            url: 'https://www.cryptopia.co.nz/api/GetMarket/GRS_BTC',
+            key: 'Data.LastPrice'
         }
     };
 
@@ -81,7 +45,7 @@
         handleSingleRequestResult: function (raw) {
             try {
                 var res = JSON.parse(raw);
-                this.updateLatestInfo(this.getPriceInfo(res));   
+                this.updateLatestInfo(this.getPriceInfo(res),res);
             } catch (e) {
                 // exception
             }
@@ -120,9 +84,14 @@
 
         getPriceInfo: function (res) {
             var price = this.getDescendantProp(res, markets[config.default_market].key);
-            price = (!price || isNaN(price)) ? 
-                    0 : parseFloat(price).toFixed(0);
+            price = this.getPriceInSatoshi(price);
+            price = (!price || isNaN(price)) ?
+                    0 : parseFloat(price);
             return price;
+        },
+
+        getPriceInSatoshi: function (price) {
+            return price*100000000;
         },
 
         getDescendantProp: function (res, desc) {
@@ -136,8 +105,17 @@
         },
 
         updateBadge: function (price) {
+            chrome.browserAction.getBadgeText({}, function(result) {
+                if (result < price) {
+                    // price is increasing -> light green
+                    chrome.browserAction.setBadgeBackgroundColor({color: "#32ba39"});
+                } else if (result > price) {
+                    // price is falling -> light red
+                    chrome.browserAction.setBadgeBackgroundColor({color: "#f44141"});
+                }
+            });
             chrome.browserAction.setBadgeText({
-                text: price
+                text: price.toString()
             });
         }
     };

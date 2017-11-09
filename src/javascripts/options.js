@@ -4,22 +4,13 @@
      * @type {Object}
      */
     var defaultVals = {
-        'refresh_time': 15000,
-        'default_market': '796'
+        'refresh_time': 10000,
+        'default_market': 'bittrex'
     };
 
     var markets = [
-        'bitstamp',
-        'btcc',
-        'okcoin',
-        'chbtc',
-        'huobi',
-        'btce',
-        '796',
-        'btctrade',
-        'btc100',
-        'bitfinex',
-        'yunbi'
+        'bittrex',
+        'cryptopia'
     ];
 
     var OptionsPage = {
