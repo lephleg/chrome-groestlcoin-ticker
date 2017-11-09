@@ -5,7 +5,7 @@
      */
     var defaultVals = {
         'refresh_time': 10000,
-        'default_market': '796'
+        'default_market': 'bittrex'
     };
 
     var markets = {
