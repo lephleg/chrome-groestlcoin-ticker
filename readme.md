@@ -7,9 +7,9 @@
 
 ### Screenshot:
 
-![Badge Screenshot](screenshots/screenshot-badge.png)
+![Badge Screenshot](screenshots/screenshot-badge-2.png)
 
-![Option Screenshot](screenshots/screenshot-option.png)
+![Option Screenshot](screenshots/screenshot-option-2.png)
 
 ### Markets (so far):
  
