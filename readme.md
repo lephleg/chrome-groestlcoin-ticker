@@ -1,8 +1,9 @@
-## A simple Chrome Extension showing current Bitcoin price ticker.
+## A simple Chrome Extension showing current Groestlcoin price ticker.
+
+![GRS logo](src/images/grs.png)
 
 ### Chrome Web Store
-
-[https://chrome.google.com/webstore/detail/simple-bitcoin-ticker/jhbgelfndhaccioppbfadmjabloddnkg/related](https://chrome.google.com/webstore/detail/simple-bitcoin-ticker/jhbgelfndhaccioppbfadmjabloddnkg/related)
+[https://chrome.google.com/webstore/detail/chrome-groestlcoin-ticker/mhpjbppfbknblbhlingbfofoghnldmek](https://chrome.google.com/webstore/detail/chrome-groestlcoin-ticker/mhpjbppfbknblbhlingbfofoghnldmek)
 
 ### Screenshot:
 
@@ -10,26 +11,17 @@
 
 ![Option Screenshot](screenshots/screenshot-option.png)
 
-### Markets:
+### Markets (so far):
  
-- 796 Xchange
-- Bitfinex
-- Bitstamp
-- BTC-E
-- BTC100
-- BTCC
-- BTCTrade
-- CHBTC
-- Huobi
-- OKCoin
-- Yunbi
+* Bittrex
+* Cryptopia
 
 ### Usage:
 
 1. Open `chrome://extensions/` with your Chrome Browser.
 2. Enable Developer Mode, Click `"Load Unpacked Extension..."`
 3. Select the `"src"` folder in this repository.
-4. The price will show as badge over the extension icon, refresh in every 15 seconds by default.
+4. The price will show as badge over the extension icon, refresh in every 10 seconds by default.
 
 ### Test:
 
