@@ -5,13 +5,15 @@
      */
     var defaultVals = {
         'refresh_time': 10000,
-        'default_market': 'bittrex'
+        'default_market': 'bittrex',
+        'last_updated' : moment()
     };
 
     var markets = {
         'bittrex': {
-            url: 'https://bittrex.com/api/v1.1/public/getticker?market=BTC-GRS',
-            key: 'result.Last'
+            url: 'https://bittrex.com/api/v1.1/public/getmarketsummary?market=BTC-GRS',
+            key: 'result.0.Last',
+            timestamp: 'result.0.TimeStamp'
         },
         'cryptopia': {
             url: 'https://www.cryptopia.co.nz/api/GetMarket/GRS_BTC',
@@ -45,7 +47,7 @@
         handleSingleRequestResult: function (raw) {
             try {
                 var res = JSON.parse(raw);
-                this.updateLatestInfo(this.getPriceInfo(res),res);
+                this.updateLatestInfo(this.getPriceInfo(res), this.getTimestampInfo(res));
             } catch (e) {
                 // exception
             }
@@ -90,6 +92,11 @@
             return price;
         },
 
+        getTimestampInfo: function (res) {
+            var timestamp = this.getDescendantProp(res, markets[config.default_market].timestamp);
+            return moment(timestamp).format("YYYY/MM/DD - HH:mm");
+        },
+
         getPriceInSatoshi: function (price) {
             return price*100000000;
         },
@@ -100,9 +107,36 @@
             return res;
         },
 
-        updateLatestInfo: function (price) {
+        updateLatestInfo: function (price, timestamp) {
             this.updateBadge(price);
+            this.updateChartData(price, timestamp);
+
         },
+
+        updateChartData: function (price, timestamp) {
+
+            var pricesStored = JSON.parse(localStorage.getItem("priceData"));
+
+            if (pricesStored === null) {
+                pricesStored = new Object();
+            }
+
+            console.log(pricesStored);
+
+            if (!(timestamp in pricesStored)) {
+                pricesStored[timestamp] = price;
+
+                if (pricesStored.length > 30) {
+                    var keys = Object.keys(pricesStored);
+                    var earliest = new Date(Math.min.apply(null,keys));
+                    delete object[earliest]
+                }
+
+                console.log(pricesStored);
+                localStorage.setItem("priceData", JSON.stringify(pricesStored));
+            }
+        },
+
 
         updateBadge: function (price) {
             chrome.browserAction.getBadgeText({}, function(result) {
